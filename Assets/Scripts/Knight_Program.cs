@@ -21,7 +21,8 @@ public class Knight_Program : MonoBehaviour
     const int Anima_Jump   = 4;
     const int Anima_jumpAttacl = 5;
     const int Anima_Dead   = 6;
-    bool Ani_Salto = true;
+    bool Ani_Salto = false;
+    int aux = 0;
     
     private Vector3 lastCheckpointPosition;
     // Start is called before the first frame update
@@ -65,24 +66,24 @@ public class Knight_Program : MonoBehaviour
           ChangeAnimation(Anima_Idle);
           
         }
-        if (Input.GetKey(KeyCode.Space) && Ani_Salto){
+        if (Input.GetKeyDown(KeyCode.Space) && aux<2){
             //ChangeAnimation_Bool(Ani_Salto);
-            ChangeAnimation(Anima_Jump);
-            rb.AddForce(new Vector2(0,jump_Force),ForceMode2D.Impulse);
-            Ani_Salto=false;
-        }
-        
-      
           
-
+            rb.AddForce(new Vector2(0,jump_Force),ForceMode2D.Impulse);
+            Ani_Salto=true;
+            aux++;
+        }
+        if(Ani_Salto==true){
+             ChangeAnimation(Anima_Jump);
+        }
         
     }
 
-    void OnCollisionEnter2D( Collision2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
        //ChangeAnimation_Bool(Ani_Salto);
-        Ani_Salto = true;
-
+        Ani_Salto = false;
+        aux=0;
         if(other.gameObject.name == "Dark"){
             if(lastCheckpointPosition != null){
                 transform.position = lastCheckpointPosition;
@@ -93,7 +94,10 @@ public class Knight_Program : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other){
         Debug.Log("Trigger");
-        if(other.gameObject.name == "Checkpoint"){
+        if(other.gameObject.name == "Flecha_Cpoint"){
+        lastCheckpointPosition = transform.position;
+        }
+        if(other.gameObject.name == "Cartel_Cpoint"){
         lastCheckpointPosition = transform.position;
         }
     }
