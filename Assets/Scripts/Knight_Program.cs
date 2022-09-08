@@ -6,7 +6,7 @@ public class Knight_Program : MonoBehaviour
 {
     private GameManagerController gameManager;
 
-    private int velocity   = 5;
+   // private int velocity   = 5;
     private int run_vel    = 10;
     private int jump_Force = 5;
     public GameObject shield;   
@@ -21,7 +21,7 @@ public class Knight_Program : MonoBehaviour
     const int Anima_Jump   = 4;
     const int Anima_jumpAttacl = 5;
     const int Anima_Dead   = 6;
-    bool Ani_Salto = false;
+  //  bool Ani_Salto = false;
     int aux = 0;
     int aux1 = 0;
     
@@ -35,7 +35,7 @@ public class Knight_Program : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
-    //fateeeeeeeeeeeeeeeeeeees
+
     // Update is called once per frame
     void Update()
     {
@@ -54,14 +54,14 @@ public class Knight_Program : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.A) && aux1<5){
             //Crear escudo
                 var game = FindObjectOfType<GameManagerController>();
-                game.perderBala(5);
+                
                 var shieldPosition = transform.position + new Vector3(2,0,0);
                 var gb = Instantiate(shield,
                                  shieldPosition,
                                  Quaternion.identity) as GameObject;
                 var controller =gb.GetComponent<AttEsc_Controller>();
                 controller.SetRightDirection(); 
-               
+               game.perderBala(5);
                 aux1++;
         }
          if(aux==1){
@@ -72,15 +72,14 @@ public class Knight_Program : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-       //ChangeAnimation_Bool(Ani_Salto);
-        Ani_Salto = false;
+ 
         aux=0;
         if(other.gameObject.name == "Dark"){
             if(lastCheckpointPosition != null){
                 transform.position = lastCheckpointPosition;
             }
         }
-        //Debug.Log ("OnCollisionEnter2D");
+
     }
 
     void OnTriggerEnter2D(Collider2D other){
