@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Knight_Program : MonoBehaviour
 {
-
+    private GameManagerController gameManager;
 
     private int velocity   = 5;
     private int run_vel    = 10;
     private int jump_Force = 5;
-
+    public GameObject shield;   
     Rigidbody2D rb;
     SpriteRenderer sr;
     Animator animator;
@@ -23,59 +23,50 @@ public class Knight_Program : MonoBehaviour
     const int Anima_Dead   = 6;
     bool Ani_Salto = false;
     int aux = 0;
+    int aux1 = 0;
     
     private Vector3 lastCheckpointPosition;
     // Start is called before the first frame update
     void Start()
     {
+        
         Debug.Log("Iniciando Script de Player");
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
-
+    //fateeeeeeeeeeeeeeeeeeees
     // Update is called once per frame
     void Update()
     {
           
-        if(Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.X)){
-            rb.velocity = new Vector2(run_vel, rb.velocity.y);
-            sr.flipX = false;
-            ChangeAnimation(Anima_Run);
-        }
-        else if(Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.X)){
-            rb.velocity = new Vector2(-run_vel, rb.velocity.y);
-            sr.flipX = true;
-            ChangeAnimation(Anima_Run);
-        }
-        else if(Input.GetKey(KeyCode.RightArrow)){
-            rb.velocity = new Vector2(velocity, rb.velocity.y);
-            sr.flipX = false;
-            ChangeAnimation(Anima_Walk);
-        }
-        else if(Input.GetKey(KeyCode.LeftArrow)){
-            rb.velocity = new Vector2(-velocity, rb.velocity.y);
-            sr.flipX = true;
-           ChangeAnimation(Anima_Walk);
-
-        }else if(Input.GetKey(KeyCode.Z)){
-            ChangeAnimation(Anima_Attack);
-        } 
-        else{
-          rb.velocity = new Vector2(0, rb.velocity.y);
-          ChangeAnimation(Anima_Idle);
-          
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && aux<2){
+        
+        
+        if (Input.GetKeyUp(KeyCode.Space)&& aux<2){
             //ChangeAnimation_Bool(Ani_Salto);
-          
             rb.AddForce(new Vector2(0,jump_Force),ForceMode2D.Impulse);
-            Ani_Salto=true;
+
             aux++;
+        }else{
+            rb.velocity = new Vector2(run_vel, rb.velocity.y);
+            ChangeAnimation(Anima_Run);
         }
-        if(Ani_Salto==true){
-             ChangeAnimation(Anima_Jump);
+        if (Input.GetKeyUp(KeyCode.A) && aux1<5){
+            //Crear escudo
+                var game = FindObjectOfType<GameManagerController>();
+                game.perderBala(5);
+                var shieldPosition = transform.position + new Vector3(2,0,0);
+                var gb = Instantiate(shield,
+                                 shieldPosition,
+                                 Quaternion.identity) as GameObject;
+                var controller =gb.GetComponent<AttEsc_Controller>();
+                controller.SetRightDirection(); 
+               
+                aux1++;
         }
+         if(aux==1){
+            ChangeAnimation(Anima_Jump);
+        } 
         
     }
 
@@ -94,11 +85,8 @@ public class Knight_Program : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other){
         Debug.Log("Trigger");
-        if(other.gameObject.name == "Flecha_Cpoint"){
-        lastCheckpointPosition = transform.position;
-        }
-        if(other.gameObject.name == "Cartel_Cpoint"){
-        lastCheckpointPosition = transform.position;
+        if(other.gameObject.tag == "pared"){
+        rb.AddForce(new Vector2(0,jump_Force),ForceMode2D.Impulse);
         }
     }
 
