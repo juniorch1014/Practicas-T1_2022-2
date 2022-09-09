@@ -14,6 +14,8 @@ public class Knight_Program : MonoBehaviour
     SpriteRenderer sr;
     Animator animator;
 
+    BoxCollider2D bc;
+
     const int Anima_Idle   = 0;
     const int Anima_Walk   = 1;
     const int Anima_Run    = 2;
@@ -24,6 +26,8 @@ public class Knight_Program : MonoBehaviour
   //  bool Ani_Salto = false;
     int aux = 0;
     int aux1 = 0;
+
+    bool band = false;
     
     private Vector3 lastCheckpointPosition;
     // Start is called before the first frame update
@@ -41,11 +45,10 @@ public class Knight_Program : MonoBehaviour
     {
           
         
-        
+        if(band == false){
         if (Input.GetKeyUp(KeyCode.Space)&& aux<2){
             //ChangeAnimation_Bool(Ani_Salto);
             rb.AddForce(new Vector2(0,jump_Force),ForceMode2D.Impulse);
-
             aux++;
         }else{
             rb.velocity = new Vector2(run_vel, rb.velocity.y);
@@ -63,10 +66,14 @@ public class Knight_Program : MonoBehaviour
                 controller.SetRightDirection(); 
                game.perderBala(5);
                 aux1++;
+             }
+             if(aux==1){
+                ChangeAnimation(Anima_Jump);
+            } 
+        }else{
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            ChangeAnimation(Anima_Dead);
         }
-         if(aux==1){
-            ChangeAnimation(Anima_Jump);
-        } 
         
     }
 
@@ -74,10 +81,10 @@ public class Knight_Program : MonoBehaviour
     {
  
         aux=0;
-        if(other.gameObject.name == "Dark"){
-            if(lastCheckpointPosition != null){
-                transform.position = lastCheckpointPosition;
-            }
+        if(other.gameObject.tag == "zombie"){
+            band = true;
+            Destroy(this.gameObject, 2);
+            Destroy(other.gameObject);
         }
 
     }
