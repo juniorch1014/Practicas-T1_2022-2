@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class AttEsc_Controller : MonoBehaviour
-{
-    private float velocity = 20;
+{   
+ 
+    private float velocity = 10;
     private GameManagerController gameManager;
     Rigidbody2D rb;
     // Start is called before the first frame update
@@ -30,9 +31,20 @@ public class AttEsc_Controller : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D other){
-        if(other.gameObject.tag =="zombie" ){
+        if(other.gameObject.tag =="base" ){
             Destroy(this.gameObject);
         }
+        if(other.gameObject.tag =="zombie"){
+            Destroy(this.gameObject);
+            gameManager.GanarPuntos(10);
+            gameManager.SaveGame();
+        }
     }
-     
+     void OnTriggerEnter2D(Collider2D other){
+        Debug.Log("Trigger pared");
+        if(other.gameObject.tag =="pared"){
+            Destroy(this.gameObject);
+        }
+      
+    }
 }

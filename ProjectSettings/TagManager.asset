@@ -8,7 +8,12 @@ TagManager:
   - base
   - pared
   - shield
+  - coin
+  - coin2
   - zombie
+  - ParedZ
+  - ParedZ
+  - ParedZ2
   layers:
   - Default
   - TransparentFX
