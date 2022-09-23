@@ -7,7 +7,7 @@ public class Zombie_Program : MonoBehaviour
     private GameManagerController gameManager;
 
    // private int velocity   = 5;
-    private int run_velZ    = 10;
+    private int run_velZ    = 2;
     
     Rigidbody2D rb;
     
@@ -15,7 +15,10 @@ public class Zombie_Program : MonoBehaviour
     SpriteRenderer sr;
    
     const int Anima_Walk   = 4;
-    
+
+    int aux = 0;
+    int aux1 = 0;
+    int aux2 = 0;
   //  bool Ani_Salto = false;
   
     
@@ -32,8 +35,9 @@ public class Zombie_Program : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {     
-            rb.velocity = new Vector2(run_velZ, rb.velocity.y);
+    {       
+            sr.flipX = true;
+            rb.velocity = new Vector2(-run_velZ, rb.velocity.y);
             ChangeAnimation(Anima_Walk);
     }
 
@@ -44,11 +48,31 @@ public class Zombie_Program : MonoBehaviour
         if(other.gameObject.tag == "shield"){
            Destroy(this.gameObject);
         }
+        if(other.gameObject.tag == "Bola1"){
+          aux++;
+            
+        }
+        if(aux == 3){
+            Destroy(this.gameObject);
+            aux = 0;
+        }
+        if(other.gameObject.tag == "Bola2"){
+          aux1++;
+            
+        }
+        if(aux1 == 2){
+            Destroy(this.gameObject);
+            aux1 = 0;
+        }
+        if(other.gameObject.tag == "Bola3"){
+           Destroy(this.gameObject);
+        }
 
     }
 
     void OnTriggerEnter2D(Collider2D other){
         Debug.Log("Trigger");
+        //Movimiento de derecha a izquierda
         if(other.gameObject.tag == "ParedZ"){
         sr.flipX = false;
         run_velZ = 10;
@@ -57,6 +81,8 @@ public class Zombie_Program : MonoBehaviour
          sr.flipX = true;
          run_velZ = -10;
         }
+        //************************************
+
     }
 
     private void ChangeAnimation(int animation){     

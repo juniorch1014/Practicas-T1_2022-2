@@ -36,8 +36,7 @@ public class AttEsc_Controller : MonoBehaviour
         }
         if(other.gameObject.tag =="zombie"){
             Destroy(this.gameObject);
-            gameManager.GanarPuntos(10);
-            gameManager.SaveGame();
+       
         }
     }
      void OnTriggerEnter2D(Collider2D other){
