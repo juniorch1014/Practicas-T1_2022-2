@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class AttEsc_Controller : MonoBehaviour
 {   
- 
+    
     private float velocity = 10;
     private GameManagerController gameManager;
     Rigidbody2D rb;
@@ -36,7 +36,8 @@ public class AttEsc_Controller : MonoBehaviour
         }
         if(other.gameObject.tag =="zombie"){
             Destroy(this.gameObject);
-       
+            gameManager.GanarPuntos(10);
+            gameManager.SaveGame();
         }
     }
      void OnTriggerEnter2D(Collider2D other){

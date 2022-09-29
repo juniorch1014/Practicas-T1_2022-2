@@ -14,7 +14,7 @@ public class CamaraController : MonoBehaviour
     [Range(1,10)]
     public float smootherFactor;
     // Update is called once per frame
-
+    // Update is called once per frame
     void Update()
     {
         //transform.position = target.position + offset;

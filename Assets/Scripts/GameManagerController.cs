@@ -16,7 +16,10 @@ public class GameManagerController : MonoBehaviour
     private int score;
     private int coin;
     private int coin2;
-    private Vector3 lastCheckpointPosition;
+    private float Pos_X;
+    private float Pos_Y;
+    private float Pos_Z;
+    private Vector3 posicion;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +27,7 @@ public class GameManagerController : MonoBehaviour
         score = 0;
         coin = 0;
         coin2 = 0;
-        lastCheckpointPosition = PlayerIn.transform.position;
+        posicion = PlayerIn.transform.position;
         PrintScoreInScreen();
         PrintCoinInScreen1();
         PrintCoinInScreen2();
@@ -45,7 +48,11 @@ public class GameManagerController : MonoBehaviour
         data.Score = score;
         data.Coins = coin;
         data.Coins2 = coin2;
-        data.Guarda_Pos = PlayerIn.transform.position;
+       
+     
+        data.Pos_X = PlayerIn.transform.position.x;
+        data.Pos_Y = PlayerIn.transform.position.y;
+        data.Pos_Z = PlayerIn.transform.position.z;
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(file,data);
         file.Close();
@@ -61,7 +68,7 @@ public class GameManagerController : MonoBehaviour
             fileL = File.Create(filePath);
         }
     
-        
+        //No manda valores- Arreglar
         BinaryFormatter bf = new BinaryFormatter();
         Game_Data data = (Game_Data) bf.Deserialize(fileL);
         fileL.Close();
@@ -69,7 +76,11 @@ public class GameManagerController : MonoBehaviour
         score = data.Score;
         coin = data.Coins;
         coin2 = data.Coins2;
-        lastCheckpointPosition = data.Guarda_Pos;
+        posicion.x = data.Pos_X;
+        posicion.y = data.Pos_Y;
+        posicion.z = data.Pos_Z;
+
+        PlayerIn.transform.position = posicion;
         PrintScoreInScreen();
         PrintCoinInScreen1();
         PrintCoinInScreen2();
