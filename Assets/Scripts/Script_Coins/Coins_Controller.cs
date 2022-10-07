@@ -6,7 +6,7 @@ public class Coins_Controller : MonoBehaviour
 {
     // Start is called before the first frame update
    
-    AudioSource audioSource;
+    //AudioSource audioSource;
     void Start()
     {
         Debug.Log("Iniciando Script de Coins");
@@ -21,6 +21,10 @@ public class Coins_Controller : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other){
         Debug.Log("Trigger coins");
         if(other.gameObject.name == "Knight_Player"){
+            Destroy(this.gameObject);
+        }
+        Debug.Log("Trigger coins");
+        if(other.gameObject.name == "Ninja_Player"){
             Destroy(this.gameObject);
         }
        

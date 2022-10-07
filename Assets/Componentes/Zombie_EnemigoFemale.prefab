@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2531024911014173221}
   - component: {fileID: 2531024911014173220}
   - component: {fileID: 2531024911014173211}
-  - component: {fileID: -5292709863442399027}
   - component: {fileID: -2146201152176318305}
   - component: {fileID: -6515999084239599211}
   - component: {fileID: 8554210779570497596}
@@ -109,18 +108,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-5292709863442399027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2531024911014173210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b924a2701b02beb44a16f6e472623fde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &-2146201152176318305
 Rigidbody2D:
   serializedVersion: 4
@@ -180,3 +167,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b924a2701b02beb44a16f6e472623fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  paredZ: {fileID: 3785036246859514569, guid: a53388f17debc2142988ec76382a05d1, type: 3}
+  paredZ2: {fileID: 1822420255084884992, guid: 2411f6833572e1f4da9934af20d20f75, type: 3}

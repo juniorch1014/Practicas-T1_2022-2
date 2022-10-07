@@ -14,9 +14,11 @@ public class GameManager_Ninja : MonoBehaviour
     public TMP_Text scoreText1;
     public TMP_Text scoreText2;
     public TMP_Text scoreText3;
+    private TMP_Text scoreText4;
     private int score;
     private int live;
     private int enemies;
+    private int level;
     private float Pos_X;
     private float Pos_Y;
     private float Pos_Z;
@@ -28,6 +30,7 @@ public class GameManager_Ninja : MonoBehaviour
         score   = 0;
         live    = 3;
         enemies = 0;
+        level   = 0;
         posicion = PlayerIn.transform.position;
         PrintScoreInScreen();
         PrintCoinInScreen1();
@@ -103,6 +106,7 @@ public class GameManager_Ninja : MonoBehaviour
     public int Enemies(){
         return enemies;
     }
+   
     public void GanarPuntos(int puntos){
         score += puntos;
         Debug.Log("Gpuntos: " + puntos);
@@ -113,6 +117,21 @@ public class GameManager_Ninja : MonoBehaviour
         Debug.Log("Live: " + live);
         PrintCoinInScreen1();
     }
+    public void SuberNivel(int levelup){
+        level += levelup;
+        Debug.Log("Live: " + live);
+        PrintLevelInScreen();
+    }
+    public void PerderLive(int liveCant){
+        live -= liveCant;
+        Debug.Log("Live: " + live);
+        PrintCoinInScreen1();
+    }
+    public void AsignarVidas(int liveCant){
+        live = liveCant;
+        Debug.Log("Live: " + live);
+        PrintCoinInScreen1();
+    }
     public void EnemiesFalt(int enemiesCant){
         enemies += enemiesCant;
         Debug.Log("Enemies: " + enemies);
@@ -120,9 +139,10 @@ public class GameManager_Ninja : MonoBehaviour
         
     }
     private void PrintScoreInScreen(){
-        scoreText1.text = "Puntaje: " + score;
-        Debug.Log("punto: " + score);
+        scoreText1.text = "Coins: " + score;
+        Debug.Log("coins: " + score);
     }
+    
     private void PrintCoinInScreen1(){
         if(Live()>=0){
             scoreText2.text = "Vida: " + live;
@@ -139,6 +159,11 @@ public class GameManager_Ninja : MonoBehaviour
             scoreText3.text = "No hay Enemigos";
         }
     }
+    private void PrintLevelInScreen(){
+        scoreText4.text = "Nivel: " + score;
+        Debug.Log("Nivel: " + score);
+    }
+
     // Update is called once per frame
     // void Update()
     // {

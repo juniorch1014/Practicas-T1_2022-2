@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ninja_AtaqueController : MonoBehaviour
 {
-private float velocity = 10;
+    private float velocity = 20;
     private GameManager_Ninja gameManager_Ninja;
     Rigidbody2D rb;
     // Start is called before the first frame update
@@ -25,6 +25,7 @@ private float velocity = 10;
     // Update is called once per frame
     void Update()
     {
+        rb.rotation = -90;
         rb.velocity = new Vector2(realVelocity,0);
     }
 
@@ -34,7 +35,6 @@ private float velocity = 10;
         }
         if(other.gameObject.tag =="zombie"){
             Destroy(this.gameObject);
-            gameManager_Ninja.GanarPuntos(10);
         }
     }
      void OnTriggerEnter2D(Collider2D other){

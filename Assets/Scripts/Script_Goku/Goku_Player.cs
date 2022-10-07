@@ -74,6 +74,7 @@ public class Goku_Player : MonoBehaviour
         }
         if(other.gameObject.tag == "coin"){
             Destroy(other.gameObject);
+            //cambio de escena
             SceneManager.LoadScene(1);
         }
         

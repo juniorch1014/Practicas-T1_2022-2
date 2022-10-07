@@ -45,17 +45,23 @@ public class Generar_Zombies : MonoBehaviour
            
         }
         if(aux ==2 ){
-            gameManager_Ninja.EnemiesFalt(1);
+            gameManager_Ninja.EnemiesFalt(10);
+            //gameManager_Ninja.GanarPuntos(10);
             Destroy(this.gameObject);
         }
-         if(other.gameObject.name == "Ninja_Player"){
+      
+        //  if(other.gameObject.name == "Ninja_Player"){
             
-            gameManager_Ninja.EnemiesFalt(1);
-            Destroy(this.gameObject);
-        }
+        //     gameManager_Ninja.EnemiesFalt(1);
+        //     Destroy(this.gameObject);
+        // }
     }
      void OnTriggerEnter2D(Collider2D other){
-        
+          if(other.gameObject.tag == "Espada"){
+            gameManager_Ninja.EnemiesFalt(10);
+            gameManager_Ninja.GanarPuntos(1);
+            Destroy(this.gameObject);
+        }
       
     }
     private void ChangeAnimation(int animation){     

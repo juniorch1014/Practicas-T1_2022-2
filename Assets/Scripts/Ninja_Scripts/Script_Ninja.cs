@@ -9,10 +9,12 @@ public class Script_Ninja : MonoBehaviour
     private int run_vel    = 10;
     private int jump_Force = 5;
     private float timer = 0;
+    private int random = 0;
     public GameObject Bola1;
     public GameObject Bola2;
     public GameObject Bola3;
     public GameObject Kunai;
+    public GameObject Espada;
     
     Rigidbody2D rb;
     SpriteRenderer sr;
@@ -51,9 +53,10 @@ public class Script_Ninja : MonoBehaviour
 
         // Update is called once per frame
     void Update()
-    {
-        if(band==false){
-        //RightArrow
+    {   //**Teclas
+        Num_Random();
+        // if(band==false){
+        // //RightArrow
         // if(Input.GetKey(KeyCode.RightArrow)){
         //     rb.velocity = new Vector2(run_vel, rb.velocity.y);
         //     sr.flipX = false;
@@ -70,37 +73,35 @@ public class Script_Ninja : MonoBehaviour
         //     ChangeAnimation(Anima_Idle);
             
         // }
-        //Space
-        if (Input.GetKeyUp(KeyCode.Space) && aux<2){
+        // //Space
+        // if (Input.GetKeyUp(KeyCode.Space) && aux<2){
                 
-            rb.AddForce(new Vector2(0,jump_Force),ForceMode2D.Impulse);
-            aux++;
+        //     rb.AddForce(new Vector2(0,jump_Force),ForceMode2D.Impulse);
+        //     aux++;
         
-            }
-        if(aux==2){
-            ChangeAnimation(Anima_Jump);
+        //     }
+        // if(aux==2){
+        //     ChangeAnimation(Anima_Jump);
                 
-        } 
-        //Q
-        if (Input.GetKey(KeyCode.Q)){
+        // } 
+        // //Q
+        // if (Input.GetKey(KeyCode.Q)){
 
-            ChangeAnimation(Anima_Slide);
-        }
-        //X
-        if (Input.GetKey(KeyCode.X)){
-            timer += Time.deltaTime;
-            Debug.Log(timer);
-            ChangeAnimation(Anima_Attack);
-        }
-            Disparar_Bom();
-        }
+        //     ChangeAnimation(Anima_Slide);
+        // }
+        // //X
+        // if (Input.GetKey(KeyCode.X)){
+        //     timer += Time.deltaTime;
+        //     Debug.Log(timer);
+        //     ChangeAnimation(Anima_Attack);
+        // }
+        //     Disparar_Bom();
+        // }
     }
 
     void OnCollisionEnter2D(Collision2D other)
         {
-        //ChangeAnimation_Bool(Ani_Salto);
-        //Ani_Salto = false;
-            //aux=0;
+        //******************************************
             if(other.gameObject.name == "Dark"){
                 if(lastCheckpointPosition != null){
                     transform.position = lastCheckpointPosition;
@@ -125,12 +126,12 @@ public class Script_Ninja : MonoBehaviour
 
              if(other.gameObject.tag == "zombie"){
                 if(gameManager_Ninja.Live()>=0){
-                    //gameManager_Ninja.PerdeLive(1);
+                    gameManager_Ninja.PerdeLive(1);
                 }
                 if(gameManager_Ninja.Live()==-1){
-                    //ChangeAnimation(Anima_Dead);
-                   // Destroy(this.gameObject,5);
-                   // band = true;
+                    ChangeAnimation(Anima_Dead);
+                     Destroy(this.gameObject,3);
+                     band = true;
                 }
                 
             }
@@ -140,11 +141,15 @@ public class Script_Ninja : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other){
            
-            
+            if(other.gameObject.tag =="coin"){
+           
+                gameManager_Ninja.GanarPuntos(10);
+                //gameManager.SaveGame();
+        }
            
         
     }
-
+    //Teclas
     private void Disparar_Bom(){
         if(sr.flipX == false){
                
@@ -229,13 +234,24 @@ public class Script_Ninja : MonoBehaviour
                     
         }
     }
-    private void ChangeAnimation(int animation){     
+    private void Contador(){
+        timer += Time.deltaTime;
+        Debug.Log(timer);
+        ChangeAnimation(Anima_Attack);
+    }
+    //**Random************************
+    private void Num_Random(){
+        random = Random.Range(0,3);
+        Debug.Log("R: "+ random);
+    }
+
+    public void ChangeAnimation(int animation){     
         animator.SetInteger("EstadoNinja",animation);
     }
     private void ChangeAnimation_Bool(bool animat_bool){
         animator.SetBool("Saltar",animat_bool);
     }
-
+    //botones
     public void derecha(){
             rb.velocity = new Vector2(run_vel, rb.velocity.y);
             sr.flipX = false;
@@ -258,6 +274,7 @@ public class Script_Ninja : MonoBehaviour
     }
     public void disparar(){
         if(bandDis==false){
+           
             if(sr.flipX == false){
                  
                     Debug.Log(aux1);
@@ -279,10 +296,29 @@ public class Script_Ninja : MonoBehaviour
                     controller.SetLeftDirection();
                     
             }
-
+        ChangeAnimation(Anima_Throw);
         }
+        //Espada
         if(bandDis==true){
             Debug.Log("cambio");
+            if(sr.flipX == false){
+                    
+                    Debug.Log(aux1);
+                    var espadaPosition = transform.position + new Vector3(1,0,0);
+                    var gb = Instantiate(Espada,
+                            espadaPosition,
+                            Quaternion.identity) as GameObject;
+                        
+            }
+            if(sr.flipX == true){
+                    
+                    Debug.Log(aux1);
+                    var espadaPosition = transform.position + new Vector3(-1,0,0);
+                    var gb = Instantiate(Espada,
+                            espadaPosition,
+                            Quaternion.identity) as GameObject;
+                        
+            }
             ChangeAnimation(Anima_Attack);
         }
 
